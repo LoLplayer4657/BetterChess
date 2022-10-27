@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ButtonUI : MonoBehaviour
+{
+    [Header("Other Scripts")]
+    public Game game;
+    public ChessUI chessUI;
+
+    [Header("UI Elements")]
+    public GameObject selectScreen;
+    
+    //Button Inputs
+    //Grey Button
+    public void GreyChess()
+    {
+        chessUI.greyProfile = true;
+        chessUI.ColourProfile();
+        game.SetPosition();
+        Deselect();
+        chessUI.startTimer = true;
+    }
+
+    //Home Button
+    public void HomeChess()
+    {
+        chessUI.homeProfile = true;
+        chessUI.ColourProfile();
+        game.SetPosition();
+        Deselect();
+        chessUI.startTimer = true;
+    }
+
+    //Royale Button
+    public void RoyaleChess()
+    {
+        chessUI.royaleProfile = true;
+        chessUI.ColourProfile();
+        game.SetPosition();
+        Deselect();
+        chessUI.startTimer = true;
+    }
+
+    //Deselects the select screen
+    public void Deselect()
+    {
+        selectScreen.SetActive(false);
+    }
+}
