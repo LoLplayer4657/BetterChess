@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class Title : MonoBehaviour
+{
+    [Header("Checking the Hover")]
+    public Image hoverImage;
+    private Vector3 playerPos;
+    private RaycastHit2D hit;
+    
+    // Update is called once per frame
+    void Update()
+    {
+        CheckHover();
+    }
+
+    //This void checks if the player is hovering over anything; if so then takes that objects postion
+    public void CheckHover()
+    {
+        hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        //It will then take that gameobjects image and put it as a selected item
+        if (hit.collider != null)
+        {
+            playerPos = hit.collider.transform.position;
+            ButtonHover();
+        }
+        //Will make the image disappear
+        else
+        {
+            ButtonExit();
+        }
+    }
+
+    //What happens if the player hovers over an object
+    public void ButtonHover()
+    {
+        hoverImage.transform.position = new Vector2(playerPos.x - 2f, playerPos.y);
+        hoverImage.enabled = true;
+    }
+    
+    //What happens if the player exits over an object
+    public void ButtonExit()
+    {
+        hoverImage.enabled = false;
+    }
+
+    //Start button function
+    public void StartButton()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+    
+    //Quit button function
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
+}
