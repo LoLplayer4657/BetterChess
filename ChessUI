@@ -1,0 +1,154 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class ChessUI : MonoBehaviour
+{
+    [Header("Stuff")]
+    public GameObject controller;
+
+    [Header("Screen Stuff")]
+    public GameObject gameScreen;
+
+    [Header("Text Stuff")]
+    public string winnerName;
+    public TextMeshProUGUI winnerText;
+    public TextMeshProUGUI restartText;
+    public TMP_FontAsset mineFont;
+
+    [Header("Colour Profile")]
+    //Products
+    public Image backGround;
+    public SpriteRenderer chessPiece;
+    public Image chessBoard;
+    public SpriteRenderer movePlate;
+    //Colors
+    public Color32 backColor;
+    public Color32 pieceColor;
+    public Color32 boardColor;
+    public Color32 plateColor;
+    //Profile Parameters
+    public bool royaleProfile;
+    public bool greyProfile;
+    public bool homeProfile;
+
+    [Header("Time")]
+    public TextMeshProUGUI timeText;
+    public float time = 0;
+    public bool startTimer;
+
+    //End Game Stuff
+    public void Update()
+    {
+        Timer();
+    }
+    public void Activate()
+    {
+        //Finding and turning off things
+        controller = GameObject.FindGameObjectWithTag("GameController");
+        gameScreen.SetActive(true);
+        
+        //Setting all the UI at the End
+        ChessScreen();
+        ChessText();
+    }
+
+    //Things to do with the GameScreen
+    public void ChessScreen()
+    {
+        //Setting Screen Size
+        int x = 1024;
+        int y = 768;
+
+        //Setting the Dimension
+        gameScreen.transform.localScale = new Vector3(x, y, 0);
+    }
+
+    //Things to do with the text
+    public void ChessText()
+    {
+        //Setting Text Box Size
+        int width = 860;
+        int height = 60;
+        winnerText.rectTransform.sizeDelta = new Vector2(width, height);
+        restartText.rectTransform.sizeDelta = new Vector2(width, height);
+
+        //Winner Text
+        
+        //Setting Winner Text Position
+        int winnerPosX = 0;
+        int winnerPosY = 315;
+        winnerText.rectTransform.anchoredPosition = new Vector2(winnerPosX, winnerPosY);
+
+        //Setting Winner Text text
+        winnerText.fontSize = 45;
+        winnerText.font = mineFont;
+        winnerText.color = Color.white;
+        winnerText.text = winnerName + " has won the game";
+
+        //Restart Text
+        
+        //Setting Restart Text Position
+        int restartPosX = 0;
+        int restartPosY = -330;
+        restartText.rectTransform.anchoredPosition = new Vector2(restartPosX, restartPosY);
+
+        //Setting Restart Text text
+        restartText.fontSize = 45;
+        restartText.font = mineFont;
+        restartText.color = Color.white;
+        restartText.text = "Tap to restart or press ESC to leave";
+    }
+
+    //Timer
+    public void Timer()
+    {
+        if (startTimer == true)
+        {
+            time += Time.deltaTime;
+
+            float minutes = Mathf.FloorToInt(time / 60);
+            float seconds = Mathf.FloorToInt(time % 60);
+            timeText.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+        }
+    }
+
+    //Controls the colour of the game
+    public void ColourProfile()
+    {
+        //Royale colour I think
+        if(royaleProfile == true)
+        {
+            backColor = new Color32(34, 51, 59, 255);
+            boardColor = new Color32(198, 172, 143, 255);
+            plateColor = new Color32(94, 80, 63, 255);
+            pieceColor = new Color32(255, 255, 255, 255);   
+        }
+
+        //Grey colour I think
+        else if (greyProfile == true)
+        {
+            backColor = new Color32(29, 29, 29, 255);
+            boardColor = new Color32(99, 99, 99, 255);
+            plateColor = new Color32(0, 0, 0, 255);
+            pieceColor = new Color32(255, 255, 255, 255);
+        }
+
+        //Home colour I think
+        else if (homeProfile == true)
+        {
+            backColor = new Color32(21, 24, 41, 255);
+            boardColor = new Color32(142, 145, 156, 255);
+            plateColor = new Color32(43, 43, 43, 255);
+            pieceColor = new Color32(161, 161, 161, 255);
+        }
+
+        //Setting all the parts to the new colours
+        backGround.color = backColor;
+        chessBoard.color = boardColor;
+        movePlate.color = plateColor;
+        chessPiece.color = pieceColor;
+    }
+}   
